@@ -1,0 +1,50 @@
+---
+version: '3.6'
+
+services:
+  miner:
+    image: trusted-pool-plugin:${BESU_VERSION}
+    ports:
+      - "8545"
+    entrypoint: besu --config-file=config.toml
+    networks:
+      plugin:
+        ipv4_address: 172.20.239.11
+    volumes:
+      - ./config/static-nodes.json:/opt/besu/static-nodes.json
+      - ./config/miner/config.toml:/opt/besu/config.toml
+      - ./config/miner/key:/opt/besu/keys/key
+
+  alice:
+    image: trusted-pool-plugin:${BESU_VERSION}
+    ports:
+      - "8545"
+    entrypoint: besu --config-file=config.toml
+    networks:
+      plugin:
+        ipv4_address: 172.20.239.21
+    volumes:
+      - ./config/static-nodes.json:/opt/besu/static-nodes.json
+      - ./config/alice/config.toml:/opt/besu/config.toml
+      - ./config/alice/key:/opt/besu/keys/key
+
+  bob:
+    image: trusted-pool-plugin:${BESU_VERSION}
+    ports:
+      - "8545"
+    entrypoint: besu --config-file=config.toml
+    networks:
+      plugin:
+        ipv4_address: 172.20.239.22
+    volumes:
+      - ./config/static-nodes.json:/opt/besu/static-nodes.json
+      - ./config/bob/config.toml:/opt/besu/config.toml
+      - ./config/bob/key:/opt/besu/keys/key
+
+
+networks:
+  plugin:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.239.0/24

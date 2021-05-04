@@ -1,0 +1,26 @@
+logging="INFO"
+host-whitelist=["*"]
+
+# rpc
+rpc-http-enabled=true
+rpc-http-host="0.0.0.0"
+rpc-http-port=8545
+rpc-http-cors-origins=["*"]
+rpc-http-apis=["ETH"]
+
+# bootnodes
+bootnodes=["enode://c9b23099ba7ee0e1b95b8088fb32337a908ea86f57512411080a7b9957079c101b996f362dad0f283a640900220e4e0cc0665c0c2491e9acc3970b498923c836@172.20.239.11:30303"]
+
+# Discovery at boot is set to a list of static files, but will also discover new nodes should they be added
+# static nodes
+static-nodes-file="static-nodes.json"
+discovery-enabled=true
+
+node-private-key-file="/opt/besu/keys/key"
+min-gas-price=0
+
+network="DEV"
+
+miner-enabled=true
+miner-coinbase="0x0000000000000000000000000000000000000001"
+
