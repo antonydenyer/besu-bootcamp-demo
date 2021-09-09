@@ -19,6 +19,21 @@ import org.web3j.tx.gas.DefaultGasProvider
 import org.web3j.utils.Async
 
 class AcceptanceTest {
+    @Test
+    fun canDeployPublicContract() {
+        val rpcUrl = "http://${instance.getServiceHost("alice_1", 8545)}:${instance.getServicePort("alice_1", 8545)}"
+        val node = JsonRpc2_0Web3j(HttpService(rpcUrl), 2000, Async.defaultExecutorService())
+
+        val simpleStorageContract = SimpleStorage.deploy(
+            node,
+            Credentials.create(getResource(AcceptanceTest::class.java, "/config/alice/key").readText()),
+            DefaultGasProvider()
+        ).send()
+
+        simpleStorageContract.set(BigInteger.valueOf(42)).send()
+
+        assertThat(simpleStorageContract.get().send()).isEqualTo(BigInteger.valueOf(42))
+    }
 
     companion object {
         private val logger = LoggerFactory.getLogger(AcceptanceTest::class.java)
@@ -53,21 +68,5 @@ class AcceptanceTest {
         internal fun afterAll() {
             instance.stop()
         }
-    }
-
-    @Test
-    fun canDeployPublicContract() {
-        val rpcUrl = "http://${instance.getServiceHost("alice_1", 8545)}:${instance.getServicePort("alice_1", 8545)}"
-        val node = JsonRpc2_0Web3j(HttpService(rpcUrl), 2000, Async.defaultExecutorService())
-
-        val simpleStorageContract = SimpleStorage.deploy(
-            node,
-            Credentials.create(getResource(AcceptanceTest::class.java, "/config/alice/key").readText()),
-            DefaultGasProvider()
-        ).send()
-
-        simpleStorageContract.set(BigInteger.valueOf(42)).send()
-
-        assertThat(simpleStorageContract.get().send()).isEqualTo(BigInteger.valueOf(42))
     }
 }

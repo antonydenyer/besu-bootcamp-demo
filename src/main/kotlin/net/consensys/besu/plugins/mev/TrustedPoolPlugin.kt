@@ -23,13 +23,13 @@ class TrustedPoolPlugin : BesuPlugin {
 
     private fun isMessagePermitted(destinationEnode: EnodeURL, code: Int): Boolean {
         if (code == MessageCode.Transactions.code) {
-            logger.error("is Transactions permitted to $destinationEnode")
+            logger.info("is Transactions permitted to $destinationEnode")
         }
 
-        // if (code == MessageCode.Transactions.code && destinationEnode != MINER) {
-        //     logger.error("Block message to $destinationEnode")
-        //     return false
-        // }
+        if (code == MessageCode.Transactions.code && destinationEnode != MINER) {
+            logger.warn("Block message to $destinationEnode")
+            return false
+        }
         return true
     }
 
