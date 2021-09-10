@@ -47,7 +47,7 @@ class AcceptanceTest {
         internal fun beforeAll() {
             instance.withEnv("BESU_VERSION", System.getenv("BESU_VERSION"))
 
-            listOf("miner", "alice", "bob")
+            listOf("mining-pool", "alice", "arbitrage-bot")
                 .forEach {
                     val serviceName = "${it}_1"
 

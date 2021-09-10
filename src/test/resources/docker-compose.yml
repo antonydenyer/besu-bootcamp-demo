@@ -2,7 +2,7 @@
 version: '3.6'
 
 services:
-  miner:
+  mining-pool:
     image: trusted-pool-plugin:${BESU_VERSION}
     ports:
       - "8545"
@@ -12,8 +12,8 @@ services:
         ipv4_address: 172.20.239.11
     volumes:
       - ./config/static-nodes.json:/opt/besu/static-nodes.json
-      - ./config/miner/config.toml:/opt/besu/config.toml
-      - ./config/miner/key:/opt/besu/keys/key
+      - ./config/mining-pool/config.toml:/opt/besu/config.toml
+      - ./config/mining-pool/key:/opt/besu/keys/key
 
   alice:
     image: trusted-pool-plugin:${BESU_VERSION}
@@ -28,7 +28,7 @@ services:
       - ./config/alice/config.toml:/opt/besu/config.toml
       - ./config/alice/key:/opt/besu/keys/key
 
-  bob:
+  arbitrage-bot:
     image: trusted-pool-plugin:${BESU_VERSION}
     ports:
       - "8545"
@@ -38,8 +38,8 @@ services:
         ipv4_address: 172.20.239.22
     volumes:
       - ./config/static-nodes.json:/opt/besu/static-nodes.json
-      - ./config/bob/config.toml:/opt/besu/config.toml
-      - ./config/bob/key:/opt/besu/keys/key
+      - ./config/arbitrage-bot/config.toml:/opt/besu/config.toml
+      - ./config/arbitrage-bot/key:/opt/besu/keys/key
 
 
 networks:
